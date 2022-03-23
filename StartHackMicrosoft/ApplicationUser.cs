@@ -7,7 +7,7 @@ namespace Domain
 {
     public class ApplicationUser : IdentityUser
     {
-        public bool PrivateProfile { get; set; }
+        public string AvatarName { get; set; }
         public int TabsOpen { get; set; }
         public bool IsOnline { get; set; }
         public string Motto { get; set; }
