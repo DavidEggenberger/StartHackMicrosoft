@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{3AF31EDB-7F45-4283-8E9E-47505A5FA10B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{7C74A62E-378E-4239-8B1F-96503E1F481D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3AF31EDB-7F45-4283-8E9E-47505A5FA10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF31EDB-7F45-4283-8E9E-47505A5FA10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF31EDB-7F45-4283-8E9E-47505A5FA10B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C74A62E-378E-4239-8B1F-96503E1F481D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C74A62E-378E-4239-8B1F-96503E1F481D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C74A62E-378E-4239-8B1F-96503E1F481D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C74A62E-378E-4239-8B1F-96503E1F481D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

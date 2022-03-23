@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
     <ProjectReference Include="..\StartHackMicrosoft\Domain.csproj" />
+    <ProjectReference Include="..\WebClient\WebClient.csproj" />
   </ItemGroup>
 
 </Project>

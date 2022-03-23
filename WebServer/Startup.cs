@@ -33,6 +33,7 @@ namespace WebServer
             app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
+            app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -43,6 +44,7 @@ namespace WebServer
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                endpoints.MapFallbackToFile("index.html");
             });
         }
     }
