@@ -9,5 +9,6 @@ namespace Domain
     {
         public Guid Id { get; set; }
         public ScenarioType ScenarioType { get; set; }
+
     }
 }

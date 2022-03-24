@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Data;
+using WebServer.Misc;
+using WebServer.SignalR;
 
 namespace WebServer
 {
@@ -32,6 +34,14 @@ namespace WebServer
             {
                 options.UseSqlServer(Configuration["AzureKeyVaultSQLConnection"]);
             });
+
+            services.Configure<AzureSpeechAnalysisOptions>(options =>
+            {
+                options.Endpoint = Configuration["AzureKeyVaultSpeechEndpoint"];
+                options.APIKey = Configuration["AzureKeyVaultAPIKey"];
+            });
+
+            services.AddAutoMapper(GetType().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +59,7 @@ namespace WebServer
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<NotificationHub>("/hub");
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapFallbackToFile("index.html");

@@ -23,5 +23,7 @@ namespace WebServer.Data
             builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Domain.LearningBadge> LearningBadge { get; set; }
     }
 }
