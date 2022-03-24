@@ -79,8 +79,11 @@
         scenarios = await HttpClientService.GetFromAPIAsync<List<ScenarioDTO>>("/scenarios");
         StateHasChanged();
 
-        diagram.RegisterModelComponent<ScenarioMemberNode, ScenarioMemberComponent>();
-        diagram.RegisterModelComponent<UserNode, UserComponent>();
+        if(SelectedScenario == null)
+        {
+            diagram.RegisterModelComponent<ScenarioMemberNode, ScenarioMemberComponent>();
+            diagram.RegisterModelComponent<UserNode, UserComponent>();
+        }
 
         diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
         StateHasChanged();
