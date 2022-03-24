@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
-    <ProjectReference Include="..\StartHackMicrosoft\Domain.csproj" />
     <ProjectReference Include="..\WebClient\WebClient.csproj" />
   </ItemGroup>
 
