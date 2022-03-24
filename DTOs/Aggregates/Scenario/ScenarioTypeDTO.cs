@@ -9,6 +9,7 @@ namespace DTOs.Aggregates.Scenario
     public enum ScenarioTypeDTO
     {
         Bullying,
-        Sexism
+        Sexism,
+        SubtleSexism
     }
 }

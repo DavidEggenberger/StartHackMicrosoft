@@ -23,11 +23,12 @@
 }
 .LearningBadgeContainer img{
     height: 25px;
+    margin-right: 5px;
 }
 .ScenarioContainer{
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.3);
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     transition: 0.3s;
     padding: 3px;
     border: 1px solid white;
@@ -41,5 +42,10 @@
         cursor: pointer;
     }
 .ScenarioSection h3{
+    margin-bottom: 5px;
+}
+.LearningBadgeContainer{
+    display: flex;
+    align-items: flex-end;
     margin-bottom: 5px;
 }

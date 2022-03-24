@@ -33,6 +33,7 @@
             {
                 <div class="LearningBadgeContainer">
                     <img src="@($"/LearningBadges/{learningBage.IconUri}")"/>
+                    <h6>@learningBage.Description</h6>
                 </div>
             }
         </div>
@@ -40,7 +41,7 @@
 </div>
 
 @code{
-    private ScenarioDTO selectedScenario = new ScenarioDTO();
+    private ScenarioDTO selectedScenario;
     public ScenarioDTO SelectedScenario
     {
         get
@@ -50,6 +51,32 @@
         set
         {
             selectedScenario = value;
+            if (selectedScenario.ScenarioType == ScenarioTypeDTO.Bullying)
+            {
+                var v = diagram.Nodes.AsEnumerable().ToList();
+                diagram.Nodes.Remove(v);
+                Point one = new Point((diagram.Container.Width / 2) - 160, (diagram.Container.Height / 2) - 160);
+                Point two = new Point((diagram.Container.Width / 2) - 160, (diagram.Container.Height / 2) - 160);
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, one));
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, two));
+                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+            }
+            if (selectedScenario.ScenarioType == ScenarioTypeDTO.Sexism)
+            {
+                var v = diagram.Nodes.AsEnumerable().ToList();
+                diagram.Nodes.Remove(v);
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+            }
+            if (selectedScenario.ScenarioType == ScenarioTypeDTO.SubtleSexism)
+            {
+                var v = diagram.Nodes.AsEnumerable().ToList();
+                diagram.Nodes.Remove(v);
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2), (diagram.Container.Height / 2))));
+                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+            }
+            StateHasChanged();
         }
     }
     private Diagram diagram;
@@ -74,18 +101,24 @@
         };
 
         diagram = new Diagram(options);
-        await Task.Delay(100);
+        await Task.Delay(200);
+        StateHasChanged();
+
         learningBadges = await HttpClientService.GetFromAPIAsync<List<LearningBadgeDTO>>("/learningbadges");
         scenarios = await HttpClientService.GetFromAPIAsync<List<ScenarioDTO>>("/scenarios");
-        StateHasChanged();
+
+        diagram.RegisterModelComponent<InformationNode, InformationNodeComponent>();
+        diagram.RegisterModelComponent<UserNode, UserComponent>();
+        diagram.RegisterModelComponent<ScenarioMemberNode, ScenarioMemberComponent>();
 
         if(SelectedScenario == null)
         {
-            diagram.RegisterModelComponent<ScenarioMemberNode, ScenarioMemberComponent>();
-            diagram.RegisterModelComponent<UserNode, UserComponent>();
+            diagram.Nodes.Add(new InformationNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
         }
-
-        diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+        else
+        {
+            diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+        }
         StateHasChanged();
     }
     public async Task SelectScenario(ScenarioDTO scenario)
@@ -96,5 +129,27 @@
         parameters.Add("Scenario", scenario);
         parameters.Add("ScenarioSelectedCallback", scenarioCallback);
         Modal.Show<SelectScenarioModal>(string.Empty, parameters);
+    }
+    private async Task RedrawDiagram()
+    {
+        var options = new DiagramOptions
+        {
+            DeleteKey = "Delete",
+            DefaultNodeComponent = null,
+            AllowMultiSelection = true,
+            AllowPanning = false,
+            Zoom = new DiagramZoomOptions
+            {
+                Enabled = false
+            },
+            Links = new DiagramLinkOptions
+            {
+                DefaultColor = "black"
+            }
+        };
+
+        diagram = new Diagram(options);
+        await Task.Delay(200);
+        StateHasChanged();
     }
 }

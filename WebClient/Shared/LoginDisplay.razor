@@ -5,7 +5,7 @@
         <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
     </Authorized>
     <NotAuthorized>
-        <a href="/login">Log in</a>
+        <button @onclick="() => NavigationManager.NavigateTo(EndpointConstants.LoginPath, true)">Log in</button>
     </NotAuthorized>
 </AuthorizeView>
 

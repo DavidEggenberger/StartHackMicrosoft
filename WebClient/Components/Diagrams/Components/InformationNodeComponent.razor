@@ -1,0 +1,19 @@
+﻿<div class="card" style="width: auto;">
+    <h3>Welcome to BloomingBuddhas 🧘🌸</h3>
+    <div style="display: grid; place-content: center; margin-top: 10px;">
+
+        <h5>Please select a scenario on the left</h5>
+    </div>
+
+    @foreach (var port in Node.Ports)
+    {
+        <div style="display: none;">
+            <PortRenderer Port="port" />
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public InformationNode Node { get; set; }
+}

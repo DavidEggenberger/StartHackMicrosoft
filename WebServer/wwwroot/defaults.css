@@ -51,3 +51,18 @@ ul {
 div, aside{
     box-sizing: border-box;
 }
+
+button{
+    padding: 3px;
+    outline: none;
+    font-size: 18px;
+    border-radius: 2px;
+    border: 1px solid black;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+    button:hover {
+        background: rgba(255, 255, 255, 0.9);
+    }
