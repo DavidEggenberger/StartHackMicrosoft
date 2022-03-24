@@ -1,12 +1,18 @@
 ﻿<div class="SelectScenarioModal" style="margin-top: 10px;">
-    <h3>Do you want to simulate: @Scenario.Name?</h3>
-    <div style="height: 40px; width: 100%; display: grid; place-content: center;">
-        <div style="width: 80px; display: flex; justify-content: space-between;">
-            <button @onclick="async() => await ScenarioSelected()">
-                Yes
+    <h3>In which language do you want to simulate the @Scenario.Name scenario?</h3>
+    <div style="height: 90px; width: 100%; display: grid; place-content: center;">
+        <select style="margin: 15px 0;" @bind="Scenario.Language" @bind:event="oninput">
+            <option>English</option>
+            <option>German</option>
+            <option>Swiss German</option>
+            <option>Finish</option>
+        </select>
+        <div style="width: 150px; display: flex; justify-content: space-between;">
+            <button @onclick="async() => await ModalInstance.CloseAsync()">
+                Cancel
             </button>
-            <button @onclick="async () => await ModalInstance.CloseAsync()">
-                No
+            <button @onclick="async () => await ScenarioSelected()">
+                Simulate
             </button>
         </div> 
     </div>
@@ -15,7 +21,12 @@
 @code {
     [Parameter] public ScenarioDTO Scenario { get; set; }
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
-    [Parameter] public Action<ScenarioDTO> ScenarioSelectedCallback { get; set; }
+    [Parameter] public Func<ScenarioDTO, Task> ScenarioSelectedCallback { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
 
     public async Task ScenarioSelected()
     {

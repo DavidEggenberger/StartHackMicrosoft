@@ -179,7 +179,12 @@
         steps = new List<ScenarioStepDTO>();
         var parameters = new ModalParameters();
         parameters.Add("Scenario", scenario);
-        Action<ScenarioDTO> scenarioCallback = (s) => { SelectedScenario = s; StateHasChanged(); };
+        Func<ScenarioDTO, Task> scenarioCallback = async (s) => 
+        { 
+            SelectedScenario = s;
+            await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/speech/?language={SelectedScenario.Language}&text={selectedScenario.ShortDescription}");
+            StateHasChanged();
+        };
         parameters.Add("Scenario", scenario);
         parameters.Add("ScenarioSelectedCallback", scenarioCallback);
         Modal.Show<SelectScenarioModal>(string.Empty, parameters);

@@ -11,16 +11,28 @@ namespace WebServer.Controllers
     public class TranslatorController : ControllerBase
     {
         private readonly TranslatorService translatorService;
+        private readonly TextToSpeechService textToSpeechService;
 
-        public TranslatorController(TranslatorService translatorService)
+        public TranslatorController(TranslatorService translatorService, TextToSpeechService textToSpeechService)
         {
             this.translatorService = translatorService;
+            this.textToSpeechService = textToSpeechService;
         }
 
         [HttpGet]
         public async Task<TranslationResultDTO> Translate([FromQuery] string name, [FromQuery] string fromLanguage)
         {
             string result = await translatorService.TranslateToEnglisch(name, fromLanguage);
+            return new TranslationResultDTO
+            {
+                Result = result
+            };
+        }
+
+        [HttpGet("speech")]
+        public async Task<TranslationResultDTO> Translate([FromQuery] string language, [FromQuery] string text, [FromQuery] string goalLanguage)
+        {
+            string result = await textToSpeechService.SynthesizeAudioAsync("en-US", text);
             return new TranslationResultDTO
             {
                 Result = result

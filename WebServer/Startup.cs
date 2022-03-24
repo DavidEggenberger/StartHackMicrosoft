@@ -54,6 +54,7 @@ namespace WebServer
                 options.Endpoint = "https://api.cognitive.microsofttranslator.com/";
                 options.APIKey = Configuration["AzureKeyVaultTranslatorAPIKey"];
                 options.Location = "switzerlandnorth";
+                options.SubscriptionKey = Configuration["AzureKeyVaultSubscriptionKey"];
             });
             services.AddAutoMapper(GetType().Assembly);
 
@@ -97,6 +98,7 @@ namespace WebServer
             identityService.AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<TranslatorService>();
+            services.AddScoped<TextToSpeechService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
