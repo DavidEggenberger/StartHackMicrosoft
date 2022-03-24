@@ -1,4 +1,4 @@
-﻿namespace WebServer.Misc
+﻿namespace WebServer.Options
 {
     public class AzureSpeechAnalysisOptions
     {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
-using WebServer.Misc;
+using WebServer.Options;
 
 namespace WebServer.Controllers
 {

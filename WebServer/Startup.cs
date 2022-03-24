@@ -15,7 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Data;
-using WebServer.Misc;
+using WebServer.Options;
 using WebServer.SignalR;
 
 namespace WebServer
@@ -48,8 +48,12 @@ namespace WebServer
                 options.Endpoint = Configuration["AzureKeyVaultSpeechEndpoint"];
                 options.APIKey = Configuration["AzureKeyVaultAPIKey"];
             });
+            services.Configure<AzureTranslatorOptions>(options =>
+            {
+                options.Endpoint = Configuration["AzureKeyVaultSpeechEndpoint"];
+                options.APIKey = Configuration["AzureKeyVaultAPIKey"];
+            });
             services.AddAutoMapper(GetType().Assembly);
-
 
             AuthenticationBuilder authenticationBuilder = services.AddAuthentication(options =>
             {

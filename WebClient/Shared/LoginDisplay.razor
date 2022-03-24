@@ -1,5 +1,4 @@
-﻿@inject NavigationManager Navigation
-
+﻿
 <AuthorizeView>
     <Authorized>
         Hello, @context.User.Identity.Name!
@@ -13,6 +12,6 @@
 @code{
     private async Task BeginSignOut(MouseEventArgs args)
     {
-        Navigation.NavigateTo(EndpointConstants.LogoutPath);
+        NavigationManager.NavigateTo(EndpointConstants.LogoutPath);
     }
 }
