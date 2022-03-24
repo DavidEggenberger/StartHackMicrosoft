@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace DTOs.Aggregates.Scenario
 {
-    public enum ScenarioRole
+    public enum ScenarioRoleDTO
     {
         Victim,
         Bystander,

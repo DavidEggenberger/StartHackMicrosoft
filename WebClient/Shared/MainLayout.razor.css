@@ -11,5 +11,6 @@ nav{
     padding-right: 10px;
 }
 .body{
+    padding: 15px 10px 15px 15px;
     height: calc(100% - 50px);
 }

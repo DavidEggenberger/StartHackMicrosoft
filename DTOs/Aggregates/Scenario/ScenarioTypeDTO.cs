@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTOs.Aggregates
+namespace DTOs.Aggregates.Scenario
 {
-    public class ScenarioDTO
+    public enum ScenarioTypeDTO
     {
+        Bullying,
+        Sexism
     }
 }
