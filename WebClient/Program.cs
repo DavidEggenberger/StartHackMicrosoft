@@ -26,8 +26,8 @@ namespace WebClient
             builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("default"));
             builder.Services.AddScoped<HttpClientService>();
             builder.Services.AddTransient<AuthorizedHandler>();
-            builder.Services.AddHttpClient("authorizedClient", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-                .AddHttpMessageHandler<AuthorizedHandler>();
+            builder.Services.AddHttpClient("authorizedClient", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+                //.AddHttpMessageHandler<AuthorizedHandler>();
 
             builder.Services.AddAuthorizationCore();
 

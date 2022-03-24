@@ -156,6 +156,9 @@ namespace WebServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IconUri")
                         .HasColumnType("nvarchar(max)");
 
@@ -164,7 +167,7 @@ namespace WebServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LearningBadge");
+                    b.ToTable("LearningBadges");
                 });
 
             modelBuilder.Entity("Domain.Scenario", b =>
@@ -173,12 +176,43 @@ namespace WebServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ScenarioType")
                         .HasColumnType("int");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Situtation")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Scenarios");
+                });
+
+            modelBuilder.Entity("Domain.ScenarioStep", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ScenarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ScenarioRoleType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScenarioId");
+
+                    b.ToTable("ScenarioStep");
                 });
 
             modelBuilder.Entity("Domain.Team", b =>
@@ -296,10 +330,12 @@ namespace WebServer.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -336,10 +372,12 @@ namespace WebServer.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -381,6 +419,13 @@ namespace WebServer.Migrations
                     b.Navigation("ApplicationUserTeam");
 
                     b.Navigation("Scenario");
+                });
+
+            modelBuilder.Entity("Domain.ScenarioStep", b =>
+                {
+                    b.HasOne("Domain.Scenario", null)
+                        .WithMany("ScenarioSteps")
+                        .HasForeignKey("ScenarioId");
                 });
 
             modelBuilder.Entity("Domain.TeamLearningBadge", b =>
@@ -466,6 +511,11 @@ namespace WebServer.Migrations
             modelBuilder.Entity("Domain.LearningBadge", b =>
                 {
                     b.Navigation("AchievedByTeams");
+                });
+
+            modelBuilder.Entity("Domain.Scenario", b =>
+                {
+                    b.Navigation("ScenarioSteps");
                 });
 
             modelBuilder.Entity("Domain.Team", b =>

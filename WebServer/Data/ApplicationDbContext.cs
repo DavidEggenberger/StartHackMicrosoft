@@ -17,13 +17,12 @@ namespace WebServer.Data
 
         public DbSet<Scenario> Scenarios { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<LearningBadge> LearningBadges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
             base.OnModelCreating(builder);
         }
-
-        public DbSet<Domain.LearningBadge> LearningBadge { get; set; }
     }
 }

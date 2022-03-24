@@ -8,5 +8,9 @@ namespace DTOs.Aggregates
 {
     public class LearningBadgeDTO
     {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string IconUri { get; set; }
+        public string Description { get; set; }
     }
 }

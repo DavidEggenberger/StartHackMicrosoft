@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebServer.Data
 {
-    public class DataSeeder
+    public static class DataSeeder
     {
-        public static async Task SeedScenariosAsync(ApplicationDbContext applicationDbContext)
+        public static async Task SeedScenariosAsync(this ApplicationDbContext applicationDbContext)
         {
             if(applicationDbContext.Scenarios.Count() == 0)
             {
@@ -18,6 +18,7 @@ namespace WebServer.Data
                      {
                         Name = "Sexism",
                         ShortDescription = "Man harrasses women during the coffe break",
+                        Situtation = "",
                         ScenarioType = ScenarioType.Sexism,
                         ScenarioSteps = new List<ScenarioStep>
                         {
@@ -52,6 +53,36 @@ namespace WebServer.Data
 
                 applicationDbContext.Scenarios.AddRange(scenarios);
                 await applicationDbContext.SaveChangesAsync();  
+            }
+        }
+        public static async Task SeedLearningBadgesAsync(this ApplicationDbContext applicationDbContext)
+        {
+            if (applicationDbContext.LearningBadges.Count() == 0)
+            {
+                List<LearningBadge> learningBadges = new List<LearningBadge>
+                {
+                     new LearningBadge
+                     {
+                         Name = "Pioneer",
+                         Description = "Simulate the first situation",
+                         IconUri = "/medal.png"
+                     },
+                     new LearningBadge
+                     {
+                         Name = "Pioneer",
+                         Description = "Simulate the first situation",
+                         IconUri = "/trophy.png"
+                     },
+                     new LearningBadge
+                     {
+                         Name = "Pioneer",
+                         Description = "Simulate the first situation",
+                         IconUri = "/ribbon-badge.png"
+                     }
+                };
+
+                applicationDbContext.LearningBadges.AddRange(learningBadges);
+                await applicationDbContext.SaveChangesAsync();
             }
         }
     }

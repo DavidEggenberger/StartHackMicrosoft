@@ -28,7 +28,7 @@ namespace WebServer.Controllers.Aggregates
         [HttpGet]
         public async Task<IEnumerable<LearningBadgeDTO>> GetLearningBadge()
         {
-            return (await context.LearningBadge.ToListAsync()).Select(l => mapper.Map<LearningBadgeDTO>(l));
+            return (await context.LearningBadges.ToListAsync()).Select(l => mapper.Map<LearningBadgeDTO>(l));
         }
     }
 }

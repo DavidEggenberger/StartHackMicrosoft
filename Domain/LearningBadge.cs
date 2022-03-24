@@ -11,6 +11,7 @@ namespace Domain
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string IconUri { get; set; }
+        public string Description { get; set; }
         public List<TeamLearningBadge> AchievedByTeams { get; set; }
     }
 }
