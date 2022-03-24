@@ -1,0 +1,19 @@
+﻿<CascadingValue Value="HubConnection">
+    @if(HubConnection != null)
+    {
+        @ChildContent
+    }
+</CascadingValue>
+
+@code{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        HubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri(EndpointConstants.NotificationHub))
+            .Build();
+        await HubConnection.StartAsync();
+    }
+}

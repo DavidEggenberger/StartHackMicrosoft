@@ -17,9 +17,9 @@ namespace WebServer.Services
             this.azureTranslatorOptions = azureTranslatorOptions.Value;
         }
 
-        public async Task<string> TranslateToEnglisch(string textToTranslate)
+        public async Task<string> TranslateToEnglisch(string textToTranslate, string fromLanguage)
         {
-            string route = "/translate?api-version=3.0&from=en&to=de&to=it";
+            string route = $"/translate?api-version=3.0&from={fromLanguage}&to=en";
             object[] body = new object[] { new { Text = textToTranslate } };
             var requestBody = JsonSerializer.Serialize(body);
 

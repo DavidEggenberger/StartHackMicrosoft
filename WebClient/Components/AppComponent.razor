@@ -1,0 +1,41 @@
+﻿@attribute [Authorize]
+
+<div class="AppComponentContainer">
+    <div class="AppComponentHeader">
+
+    </div>
+    <div class="AppComponentMain">
+         <div class="DiagramContainer">
+            <CascadingValue Value="diagram">
+                <DiagramCanvas></DiagramCanvas>
+            </CascadingValue>
+        </div>
+    </div>
+</div>
+
+@code{
+    private Diagram diagram;
+    protected override async Task OnInitializedAsync()
+    {
+        var options = new DiagramOptions
+        {
+            DeleteKey = "Delete",
+            DefaultNodeComponent = null,
+            AllowMultiSelection = true,
+            AllowPanning = false,
+            Zoom = new DiagramZoomOptions
+            {
+                Enabled = false
+            },
+            Links = new DiagramLinkOptions
+            {
+                DefaultColor = "black"
+            }
+        };
+
+        diagram = new Diagram(options);
+
+        diagram.RegisterModelComponent<ScenarioMemberNode, ScenarioMemberComponent>();
+
+    }
+}

@@ -16,6 +16,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Data;
 using WebServer.Options;
+using WebServer.Services;
 using WebServer.SignalR;
 
 namespace WebServer
@@ -50,8 +51,9 @@ namespace WebServer
             });
             services.Configure<AzureTranslatorOptions>(options =>
             {
-                options.Endpoint = Configuration["AzureKeyVaultSpeechEndpoint"];
-                options.APIKey = Configuration["AzureKeyVaultAPIKey"];
+                options.Endpoint = "https://api.cognitive.microsofttranslator.com/";
+                options.APIKey = Configuration["AzureKeyVaultTranslatorAPIKey"];
+                options.Location = "switzerlandnorth";
             });
             services.AddAutoMapper(GetType().Assembly);
 
@@ -60,7 +62,7 @@ namespace WebServer
                 options.DefaultScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
-            .AddGitHub(options =>
+            .AddMicrosoftAccount(options =>
             {
                 options.ClientId = Configuration["AzureKeyVaultGitHubClientId"];
                 options.ClientSecret = Configuration["AzureKeyVaultGitHubClientSecret"];
@@ -93,6 +95,7 @@ namespace WebServer
             identityService.AddSignInManager();
             identityService.AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped<TranslatorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

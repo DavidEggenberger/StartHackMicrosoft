@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
+using WebServer.Services;
 
 namespace WebServer.SignalR
 {
     public class NotificationHub : Hub
     {
-        public NotificationHub()
+        private readonly TranslatorService translatorService;
+        public NotificationHub(TranslatorService translatorService)
         {
-
+            this.translatorService = translatorService;
         }
+
+        //public async Task 
     }
 }
