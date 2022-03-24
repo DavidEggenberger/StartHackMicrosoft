@@ -7,11 +7,16 @@
     <title>WebClient</title>
     <base href="/" />
     <link href="site.css" rel="stylesheet" />
+    <link href="loading.css" rel="stylesheet" />
     <link href="WebClient.styles.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="loadingBackground">
+            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+    </div>
 
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>

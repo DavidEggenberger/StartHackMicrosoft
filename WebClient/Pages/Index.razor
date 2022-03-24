@@ -1,2 +1,10 @@
 ﻿@page "/"
 
+<AuthorizeView>
+    <NotAuthorized>
+        <WelcomingComponent/>
+    </NotAuthorized>
+    <Authorized>
+        <AuthorizedAppComponent/>
+    </Authorized>
+</AuthorizeView>
