@@ -48,6 +48,6 @@ ul {
     list-style: none;
 }
 
-div{
+div, aside{
     box-sizing: border-box;
 }

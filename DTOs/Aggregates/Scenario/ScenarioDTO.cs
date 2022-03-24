@@ -15,5 +15,6 @@ namespace DTOs.Aggregates
         public string ShortDescription { get; set; }
         public string Situtation { get; set; }
         public List<ScenarioStepDTO> ScenarioSteps { get; set; }
+        public bool Selected { get; set; }
     }
 }

@@ -6,13 +6,29 @@
             </CascadingValue>
         </div>
     </div>
-    <aside class="ScenariosOverview">
+    <aside class="AsideOverview">
         <div class="ScenarioSection">
-            <h3>Select a scenario to simulate</h3>
-            
+            <h3>Select a scenario to simulate:</h3>
+            @foreach(var scenario in scenarios)
+            {
+                if(selectedScenario?.Id == scenario.Id)
+                {
+                    <div itemref="@scenario.Id" class="ScenarioContainer active" @onclick="() => SelectScenario(scenario)">
+                        <h4>@scenario.Name</h4>
+                        <h6>@scenario.ShortDescription</h6>
+                    </div>
+                }
+                else
+                {
+                    <div itemref="@scenario.Id" class="ScenarioContainer" @onclick="() => SelectScenario(scenario)">
+                        <h4>@scenario.Name</h4>
+                        <h6>@scenario.ShortDescription</h6>
+                    </div>
+                }      
+            }
         </div>
         <div class="LearningBadges">
-            <h3>Your achieved learning badges:</h3>
+            <h3>Learning badges:</h3>
             @foreach(var learningBage in learningBadges)
             {
                 <div class="LearningBadgeContainer">
@@ -24,6 +40,7 @@
 </div>
 
 @code{
+    private ScenarioDTO selectedScenario;
     private Diagram diagram;
     List<LearningBadgeDTO> learningBadges = new List<LearningBadgeDTO>();
     List<ScenarioDTO> scenarios = new List<ScenarioDTO>();
@@ -56,5 +73,12 @@
 
         diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
         StateHasChanged();
+    }
+    public async Task SelectScenario(ScenarioDTO scenario)
+    {
+        selectedScenario = scenario;
+        var parameters = new ModalParameters();
+        parameters.Add("Scenario", scenario);
+        Modal.Show<SelectScenarioModal>(string.Empty, parameters);
     }
 }

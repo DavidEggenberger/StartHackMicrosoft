@@ -1,0 +1,28 @@
+﻿<div class="SelectScenarioModal" style="margin-top: 10px;">
+    <h3>Do you want to simulate: @Scenario.Name?</h3>
+    <div style="height: 40px; width: 100%; display: grid; place-content: center;">
+        <div style="width: 80px; display: flex; justify-content: space-between;">
+            <button @onclick="async() => await ScenarioSelected()">
+                Yes
+            </button>
+            <button @onclick="async () => await ModalInstance.CloseAsync()">
+                No
+            </button>
+        </div> 
+    </div>
+</div>
+
+@code {
+    [Parameter] public ScenarioDTO Scenario { get; set; }
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    [Parameter] public EventCallback<ScenarioDTO> ScenarioSelectedCallback { get; set; }
+
+    public async Task ScenarioSelected()
+    {
+        if (ScenarioSelectedCallback.HasDelegate)
+        {
+            await ScenarioSelectedCallback.InvokeAsync(Scenario);
+        }
+        await ModalInstance.CloseAsync();
+    }
+}
