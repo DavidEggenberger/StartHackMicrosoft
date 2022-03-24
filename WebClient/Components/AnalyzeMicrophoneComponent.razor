@@ -1,9 +1,8 @@
-﻿
+﻿@inject StorageService storageService
+
 <button @onclick="async() => await StartAnalyzeMicrophoneAsync()">Analyze Microphone</button>
 
 <button id="btn-stop">End Analyzing Microphone</button>
-
-<h5>@result</h5>
 
 @code{
     public string result = string.Empty;
@@ -17,7 +16,7 @@
     [JSInvokable]
     public void MicrophoneAnalyzedCallback(string s)
     {
-        result = s;
+        storageService.Message = s.Substring("[object Object]".Count());
         StateHasChanged();
     }
 }

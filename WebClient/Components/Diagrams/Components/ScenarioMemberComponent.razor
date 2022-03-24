@@ -1,4 +1,10 @@
-﻿<h3>ScenarioMemberComponent</h3>
+﻿<div class="card">
+    <h3>@Node.Role</h3>
+    @foreach (var port in Node.Ports)
+    {
+        <PortRenderer Port="port" />
+    }
+</div>
 
 @code {
     [Parameter]

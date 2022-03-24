@@ -21,6 +21,7 @@ namespace WebClient
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
+            builder.Services.AddSingleton<StorageService>();
             builder.Services.AddBlazoredModal();
             builder.Services.AddScoped<AuthenticationStateProvider, HostAuthenticationStateProvider>();
             builder.Services.AddScoped(sp => (HostAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>());

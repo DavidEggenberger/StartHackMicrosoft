@@ -10,6 +10,7 @@ namespace DTOs.Aggregates.Scenario
     {
         public Guid Id { get; set; }
         public ScenarioRoleDTO ScenarioRoleType { get; set; }
+        public bool UserSender { get; set; }
         public string Message { get; set; }
     }
 }

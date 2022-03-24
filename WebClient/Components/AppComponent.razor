@@ -1,4 +1,6 @@
-﻿<div class="AppComponentContainer">
+﻿@inject StorageService storageService
+
+<div class="AppComponentContainer">
     <div class="AppComponentMain">
         <div class="DiagramContainer">
             <CascadingValue Value="diagram">
@@ -37,10 +39,23 @@
                 </div>
             }
         </div>
+        <div class="CurrentScenarioSection">
+            @foreach(var step in steps)
+            {
+                <div class="StepContainer">
+                    @step.ScenarioRoleType
+                    @step.Message
+                </div>
+            }
+        </div>
     </aside>
 </div>
 
 @code{
+    private ScenarioStepDTO scenarioStep;
+    private string currentMessage;
+    private List<ScenarioStepDTO> steps;
+    private bool HasInformationComponent;
     private ScenarioDTO selectedScenario;
     public ScenarioDTO SelectedScenario
     {
@@ -55,26 +70,27 @@
             {
                 var v = diagram.Nodes.AsEnumerable().ToList();
                 diagram.Nodes.Remove(v);
-                Point one = new Point((diagram.Container.Width / 2) - 160, (diagram.Container.Height / 2) - 160);
-                Point two = new Point((diagram.Container.Width / 2) - 160, (diagram.Container.Height / 2) - 160);
-                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, one));
+                Point one = new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 300);
+                Point two = new Point((diagram.Container.Width / 2) - 460, (diagram.Container.Height / 2) - 200);
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Perpretator, one));
                 diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, two));
-                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) + 100)));
             }
             if (selectedScenario.ScenarioType == ScenarioTypeDTO.Sexism)
             {
                 var v = diagram.Nodes.AsEnumerable().ToList();
                 diagram.Nodes.Remove(v);
-                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
-                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Perpretator, new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 300)));
+                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) + 100)));
             }
             if (selectedScenario.ScenarioType == ScenarioTypeDTO.SubtleSexism)
             {
                 var v = diagram.Nodes.AsEnumerable().ToList();
                 diagram.Nodes.Remove(v);
-                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
-                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2), (diagram.Container.Height / 2))));
-                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Perpretator, new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 300)));
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2) - 260, (diagram.Container.Height / 2) - 40)));
+                diagram.Nodes.Add(new ScenarioMemberNode(ScenarioRoleDTO.Bystander, new Point((diagram.Container.Width / 2) + 260, (diagram.Container.Height / 2))));
+                diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) + 100)));
             }
             StateHasChanged();
         }
@@ -84,6 +100,14 @@
     List<ScenarioDTO> scenarios = new List<ScenarioDTO>();
     protected override async Task OnInitializedAsync()
     {
+        storageService.MessageChanged += m =>
+        {
+            currentMessage = m;
+            scenarioStep.Message = currentMessage;
+            steps.Add(scenarioStep);
+            StateHasChanged();
+        };
+        steps = new List<ScenarioStepDTO>();
         var options = new DiagramOptions
         {
             DeleteKey = "Delete",
@@ -101,7 +125,7 @@
         };
 
         diagram = new Diagram(options);
-        await Task.Delay(200);
+        await Task.Delay(500);
         StateHasChanged();
 
         learningBadges = await HttpClientService.GetFromAPIAsync<List<LearningBadgeDTO>>("/learningbadges");
@@ -113,16 +137,44 @@
 
         if(SelectedScenario == null)
         {
-            diagram.Nodes.Add(new InformationNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+            diagram.Nodes.Add(new InformationNode(new Point((diagram.Container.Width / 2) - 100, (diagram.Container.Height / 2) - 40)));
         }
         else
         {
             diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
         }
         StateHasChanged();
+
+        diagram.Links.Added += b =>
+        {
+            b.TargetPortChanged += (bt, old, niw) =>
+            {
+                if(bt.SourcePort.Parent is UserNode && (bt.TargetPort.Parent as ScenarioMemberNode)?.Role == ScenarioRoleDTO.Bystander)
+                {
+                    scenarioStep = new ScenarioStepDTO
+                    {
+                        Message = currentMessage,
+                        UserSender = true,
+                        ScenarioRoleType = ScenarioRoleDTO.Bystander
+                    };
+                }
+                if (bt.SourcePort.Parent is UserNode && (bt.TargetPort.Parent as ScenarioMemberNode)?.Role == ScenarioRoleDTO.Perpretator)
+                {
+                    scenarioStep = new ScenarioStepDTO
+                    {
+                        Message = currentMessage,
+                        UserSender = true,
+                        ScenarioRoleType = ScenarioRoleDTO.Perpretator
+                    };
+                }
+                StateHasChanged();
+            };
+        };
+
     }
     public async Task SelectScenario(ScenarioDTO scenario)
     {
+        steps = new List<ScenarioStepDTO>();
         var parameters = new ModalParameters();
         parameters.Add("Scenario", scenario);
         Action<ScenarioDTO> scenarioCallback = (s) => { SelectedScenario = s; StateHasChanged(); };
