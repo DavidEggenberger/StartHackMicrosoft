@@ -34,9 +34,13 @@
         };
 
         diagram = new Diagram(options);
+        await Task.Delay(100);
+        StateHasChanged();
 
         diagram.RegisterModelComponent<ScenarioMemberNode, ScenarioMemberComponent>();
         diagram.RegisterModelComponent<UserNode, UserComponent>();
 
+        diagram.Nodes.Add(new UserNode(new Point((diagram.Container.Width / 2) - 60, (diagram.Container.Height / 2) - 40)));
+        StateHasChanged();
     }
 }

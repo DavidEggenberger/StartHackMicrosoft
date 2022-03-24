@@ -1,8 +1,15 @@
-﻿<h3>ScenarioMemberComponent</h3>
+﻿<div class="card">
+    <h3>ScenarioMemberComponent</h3>
 
-<AnalyzeMicrophoneComponent/>
+    <AnalyzeMicrophoneComponent/>
+
+    @foreach (var port in Node.Ports)
+    {
+        <PortRenderer Port="port" />
+    }
+</div>
 
 @code {
     [Parameter]
-    public ScenarioMemberNode Node { get; set; }
+    public UserNode Node { get; set; }
 }

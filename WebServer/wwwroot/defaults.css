@@ -48,16 +48,3 @@ ul {
     list-style: none;
 }
 
-img {
-    display: block;
-}
-
-*,
-::before,
-::after {
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-}
