@@ -62,10 +62,11 @@ namespace WebServer
                 options.DefaultScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
-            .AddMicrosoftAccount(options =>
+            .AddLinkedIn(options =>
             {
-                options.ClientId = Configuration["AzureKeyVaultGitHubClientId"];
-                options.ClientSecret = Configuration["AzureKeyVaultGitHubClientSecret"];
+                options.ClientId = Configuration["AzureKeyVaultMSFTClientId"];
+                options.ClientSecret = Configuration["AzureKeyVaultMSFTClientSecret"];
+                options.SignInScheme = IdentityConstants.ExternalScheme;
             });
             authenticationBuilder.AddExternalCookie().Configure(options =>
             {
@@ -109,6 +110,7 @@ namespace WebServer
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

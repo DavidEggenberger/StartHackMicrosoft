@@ -19,9 +19,9 @@ namespace WebServer.Pages
             SignInManager = signInManager;
             this.translationService = translationService;
         }
-        public async Task<ActionResult> OnPostAsync([FromForm] string provider, string returnUrl)
+        public async Task<ActionResult> OnPostAsync([FromForm] string provider)
         {
-            var redirectUrl = Url.Action("ExternalLoginCallback", "User", new { returnUrl });
+            var redirectUrl = Url.Action("ExternalLoginCallback", "User");
             var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             string s = await translationService.TranslateToEnglisch("Hallo hallo ich bin David", "de-CH");
             return Challenge(properties, provider);

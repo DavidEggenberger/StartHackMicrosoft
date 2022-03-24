@@ -1,0 +1,15 @@
+nav{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.LogoSection{
+    padding-left: 15px;
+}
+.LoginDisplayContainer{
+    padding-right: 10px;
+}
+.body{
+    height: calc(100% - 50px);
+}

@@ -49,12 +49,12 @@ namespace WebServer.Controllers
         }
 
         [HttpGet("externalLoginCallback")]
-        public async Task<IActionResult> ExternalLoginCallback(string ReturnUrl = null)
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl)
         {
             var info = await signInManager.GetExternalLoginInfoAsync();
             if (info.Principal == null)
             {
-                return Redirect("/User/Login");
+                return Redirect("/Login");
             }
             var user = await userManager.FindByNameAsync(info.Principal.Identity.Name);
             if (info is not null && user is null)

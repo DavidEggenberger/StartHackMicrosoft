@@ -1,6 +1,9 @@
 ﻿.AppComponentContainer{
     height: 100%;
 }
-.DiagramContainer{
+.AppComponentMain{
+    height: calc(100% - 60px);
+}
+.DiagramContainer {
     height: 100%;
 }

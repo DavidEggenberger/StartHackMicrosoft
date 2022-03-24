@@ -1,0 +1,63 @@
+﻿blockquote,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h7 {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+}
+
+h3 {
+    font-size: 1.3rem;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+h5, label {
+    font-size: 1.1rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+h7 {
+    font-size: 0.9rem;
+}
+
+h8 {
+    font-size: 0.8rem;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+}
+
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
