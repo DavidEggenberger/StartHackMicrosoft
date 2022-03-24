@@ -40,7 +40,18 @@
 </div>
 
 @code{
-    private ScenarioDTO selectedScenario;
+    private ScenarioDTO selectedScenario = new ScenarioDTO();
+    public ScenarioDTO SelectedScenario
+    {
+        get
+        {
+            return selectedScenario;
+        }
+        set
+        {
+            selectedScenario = value;
+        }
+    }
     private Diagram diagram;
     List<LearningBadgeDTO> learningBadges = new List<LearningBadgeDTO>();
     List<ScenarioDTO> scenarios = new List<ScenarioDTO>();
@@ -76,9 +87,11 @@
     }
     public async Task SelectScenario(ScenarioDTO scenario)
     {
-        selectedScenario = scenario;
         var parameters = new ModalParameters();
         parameters.Add("Scenario", scenario);
+        Action<ScenarioDTO> scenarioCallback = (s) => { SelectedScenario = s; StateHasChanged(); };
+        parameters.Add("Scenario", scenario);
+        parameters.Add("ScenarioSelectedCallback", scenarioCallback);
         Modal.Show<SelectScenarioModal>(string.Empty, parameters);
     }
 }

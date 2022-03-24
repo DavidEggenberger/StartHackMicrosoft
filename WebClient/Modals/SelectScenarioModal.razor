@@ -15,14 +15,11 @@
 @code {
     [Parameter] public ScenarioDTO Scenario { get; set; }
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
-    [Parameter] public EventCallback<ScenarioDTO> ScenarioSelectedCallback { get; set; }
+    [Parameter] public Action<ScenarioDTO> ScenarioSelectedCallback { get; set; }
 
     public async Task ScenarioSelected()
     {
-        if (ScenarioSelectedCallback.HasDelegate)
-        {
-            await ScenarioSelectedCallback.InvokeAsync(Scenario);
-        }
+        ScenarioSelectedCallback(Scenario);
         await ModalInstance.CloseAsync();
     }
 }
