@@ -1,20 +1,32 @@
-﻿@attribute [Authorize]
-
-<div class="AppComponentContainer">
-    <div class="AppComponentHeader">
-        <h5>Bullying and Sexism at the workplace are the problem </h5>
-    </div>
+﻿<div class="AppComponentContainer">
     <div class="AppComponentMain">
-         <div class="DiagramContainer">
+        <div class="DiagramContainer">
             <CascadingValue Value="diagram">
                 <DiagramCanvas></DiagramCanvas>
             </CascadingValue>
         </div>
     </div>
+    <aside class="ScenariosOverview">
+        <div class="ScenarioSection">
+            <h3>Select a scenario to simulate</h3>
+            
+        </div>
+        <div class="LearningBadges">
+            <h3>Your achieved learning badges:</h3>
+            @foreach(var learningBage in learningBadges)
+            {
+                <div class="LearningBadgeContainer">
+                    <img src="@($"/LearningBadges/{learningBage.IconUri}")"/>
+                </div>
+            }
+        </div>
+    </aside>
 </div>
 
 @code{
     private Diagram diagram;
+    List<LearningBadgeDTO> learningBadges = new List<LearningBadgeDTO>();
+    List<ScenarioDTO> scenarios = new List<ScenarioDTO>();
     protected override async Task OnInitializedAsync()
     {
         var options = new DiagramOptions
@@ -35,6 +47,8 @@
 
         diagram = new Diagram(options);
         await Task.Delay(100);
+        learningBadges = await HttpClientService.GetFromAPIAsync<List<LearningBadgeDTO>>("/learningbadges");
+        scenarios = await HttpClientService.GetFromAPIAsync<List<ScenarioDTO>>("/scenarios");
         StateHasChanged();
 
         diagram.RegisterModelComponent<ScenarioMemberNode, ScenarioMemberComponent>();

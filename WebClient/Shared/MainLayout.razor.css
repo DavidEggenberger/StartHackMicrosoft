@@ -3,14 +3,12 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    padding-right: 15px;
 }
 .LogoSection{
     padding-left: 15px;
 }
-.LoginDisplayContainer{
-    padding-right: 10px;
-}
 .body{
-    padding: 15px 10px 15px 15px;
+    padding: 15px 15px 25px 15px;
     height: calc(100% - 50px);
 }

@@ -12,11 +12,5 @@
 </AuthorizeView>*@
 
 @code{
-    List<LearningBadgeDTO> learningBadges;
-    List<ScenarioDTO> scenarios;
-    protected override async Task OnInitializedAsync()
-    {
-        learningBadges = await HttpClientService.GetFromAPIAsync<List<LearningBadgeDTO>>("/learningbadges");
-        scenarios = await HttpClientService.GetFromAPIAsync<List<ScenarioDTO>>("/scenarios");
-    }
+    
 }
