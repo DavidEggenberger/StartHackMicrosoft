@@ -6,11 +6,11 @@ namespace WebServer.Controllers.Aggregates
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamController : ControllerBase
+    public class TeamsController : ControllerBase
     {
         private readonly ApplicationDbContext applicationDbContext;
 
-        public TeamController()
+        public TeamsController()
         {
 
         }

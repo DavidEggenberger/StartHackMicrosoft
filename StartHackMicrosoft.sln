@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "StartHackMicrosoft\Domain.csproj", "{248977C0-E47A-4167-8E1F-5E01A320C231}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "StartHackMicrosoft\Domain.csproj", "{248977C0-E47A-4167-8E1F-5E01A320C231}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebServer.csproj", "{5828CA44-6E53-4DF9-8638-2DA38FD47894}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer", "WebServer\WebServer.csproj", "{5828CA44-6E53-4DF9-8638-2DA38FD47894}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{3AF31EDB-7F45-4283-8E9E-47505A5FA10B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", "{3AF31EDB-7F45-4283-8E9E-47505A5FA10B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{7C74A62E-378E-4239-8B1F-96503E1F481D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "WebClient\WebClient.csproj", "{7C74A62E-378E-4239-8B1F-96503E1F481D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

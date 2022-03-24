@@ -19,9 +19,10 @@ namespace WebServer.Controllers.Aggregates
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
 
-        public ScenariosController(ApplicationDbContext context)
+        public ScenariosController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpGet]
