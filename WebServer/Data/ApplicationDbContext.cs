@@ -12,8 +12,11 @@ namespace WebServer.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            
         }
+
+        public DbSet<Scenario> Scenarios { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
