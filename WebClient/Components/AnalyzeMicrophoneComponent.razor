@@ -1,0 +1,23 @@
+﻿
+<button @onclick="async() => await StartAnalyzeMicrophoneAsync()">Analyze Microphone</button>
+
+<button id="btn-stop">End Analyzing Microphone</button>
+
+<h5>@result</h5>
+
+@code{
+    public string result = string.Empty;
+
+    public async Task StartAnalyzeMicrophoneAsync()
+    {
+        TokenDTO token = await HttpClient.GetFromJsonAsync<TokenDTO>("api/AzureSpeechAnalysis");
+        await JSRuntime.InvokeVoidAsync("analyzeMicrophone", DotNetObjectReference.Create(this), "de-CH", token.APIKey);
+    }
+
+    [JSInvokable]
+    public void MicrophoneAnalyzedCallback(string s)
+    {
+        result = s;
+        StateHasChanged();
+    }
+}

@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WebClient.Auth;
+using WebClient.Services;
 
 namespace WebClient
 {
@@ -19,8 +20,14 @@ namespace WebClient
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<AuthenticationStateProvider, HostAuthenticationStateProvider>();
+            builder.Services.AddScoped(sp => (HostAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>());
+            builder.Services.AddHttpClient("default", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+            builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("default"));
+            builder.Services.AddScoped<HttpClientService>();
+            builder.Services.AddTransient<AuthorizedHandler>();
+            builder.Services.AddHttpClient("authorizedClient", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+                .AddHttpMessageHandler<AuthorizedHandler>();
 
             builder.Services.AddAuthorizationCore();
 

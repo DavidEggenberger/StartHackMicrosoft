@@ -48,7 +48,7 @@ namespace WebServer.Controllers
             return Redirect("/");
         }
 
-        [HttpGet]
+        [HttpGet("externalLoginCallback")]
         public async Task<IActionResult> ExternalLoginCallback(string ReturnUrl = null)
         {
             var info = await signInManager.GetExternalLoginInfoAsync();

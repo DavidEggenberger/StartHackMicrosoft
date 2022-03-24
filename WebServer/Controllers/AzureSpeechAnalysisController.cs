@@ -20,7 +20,7 @@ namespace WebServer.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<TokenDTO> GetToken()
         {
             return new TokenDTO

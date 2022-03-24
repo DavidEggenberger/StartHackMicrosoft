@@ -69,17 +69,15 @@ namespace WebClient.Auth
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
 
             return new ClaimsPrincipal(new ClaimsIdentity());
         }
 
-        public void SignIn(string customReturnUrl = null)
+        public void SignIn()
         {
-            var encodedReturnUrl = Uri.EscapeDataString(customReturnUrl ?? navigationManager.Uri);
-            var logInUrl = navigationManager.ToAbsoluteUri($"{EndpointConstants.LoginPath}");
-            navigationManager.NavigateTo(logInUrl.ToString(), true);
+            navigationManager.NavigateTo(EndpointConstants.LoginPath, true);
         }
     }
 }

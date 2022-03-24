@@ -1,6 +1,7 @@
 ﻿body{
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+    color: black;
 }
 #app{
     height: 100vh;
