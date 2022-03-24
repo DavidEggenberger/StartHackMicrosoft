@@ -8,7 +8,7 @@
     recognizer.recognizeOnceAsync(
         function (result) {
             result += result.text;
-            dotnetReference.invokeMethodAsync("MicrophoneAnalyzedCallback", result);
+            dotnetReference.invokeMethodAsync("MicrophoneAnalyzedCallback", result, language);
 
             recognizer.close();
             recognizer = undefined;

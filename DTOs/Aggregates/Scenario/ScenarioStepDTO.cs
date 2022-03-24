@@ -12,5 +12,7 @@ namespace DTOs.Aggregates.Scenario
         public ScenarioRoleDTO ScenarioRoleType { get; set; }
         public bool UserSender { get; set; }
         public string Message { get; set; }
+        public string EnglishMessage { get; set; }
+        public string OriginalLanguageIdentifier { get; set; }
     }
 }

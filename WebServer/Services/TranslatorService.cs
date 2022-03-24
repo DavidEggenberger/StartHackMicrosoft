@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace WebServer.Services
 {
@@ -33,8 +35,20 @@ namespace WebServer.Services
                 request.Headers.Add("Ocp-Apim-Subscription-Region", azureTranslatorOptions.Location);
 
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
-                return await response.Content.ReadAsStringAsync();
+                string s = await response.Content.ReadAsStringAsync();
+                List<Root> root = JsonSerializer.Deserialize<List<Root>>(s, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, IncludeFields = true });
+                return String.Join(" ", root.SelectMany(s => s.Translations).Select(s => s.Text));
             }
         }
+    }
+    public class Translation
+    {
+        public string Text { get; set; }
+        public string To { get; set; }
+    }
+
+    public class Root
+    {
+        public List<Translation> Translations { get; set; }
     }
 }

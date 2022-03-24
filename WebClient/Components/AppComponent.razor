@@ -45,6 +45,7 @@
                 <div class="StepContainer">
                     @step.ScenarioRoleType
                     @step.Message
+                    @step.EnglishMessage
                 </div>
             }
         </div>
@@ -100,10 +101,11 @@
     List<ScenarioDTO> scenarios = new List<ScenarioDTO>();
     protected override async Task OnInitializedAsync()
     {
-        storageService.MessageChanged += m =>
+        storageService.MessageChanged += async (m, OriginalLanguageIdentifier) =>
         {
             currentMessage = m;
             scenarioStep.Message = currentMessage;
+            scenarioStep.EnglishMessage = (await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/?name={currentMessage}&fromLanguage={OriginalLanguageIdentifier}")).Result;
             steps.Add(scenarioStep);
             StateHasChanged();
         };

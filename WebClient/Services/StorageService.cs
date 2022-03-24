@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace WebClient.Services
 {
@@ -11,11 +12,13 @@ namespace WebClient.Services
             set 
             {
                 message = value;
-                MessageChanged?.Invoke(message);
             }
         }
-
-        public event Action<string> MessageChanged;
+        public async void ChangeMessage(string message, string lIdentifier)
+        {
+            await MessageChanged?.Invoke(message, lIdentifier);
+        }
+        public event Func<string, string, Task> MessageChanged;
 
     }
 }
