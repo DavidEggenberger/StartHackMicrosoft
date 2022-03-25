@@ -32,14 +32,32 @@ namespace WebServer.Data
                      new Scenario
                      {
                         Name = "Bullying",
-                        ShortDescription = "2 colleagues bully a man",
-                        ScenarioType = ScenarioType.Bullying
+                        ShortDescription = "You are bullied by two colleagues",
+                        ScenarioType = ScenarioType.Bullying,
+                        ScenarioSteps = new List<ScenarioStep>
+                        {
+                            new ScenarioStep
+                            {
+                                ScenarioRoleType = ScenarioRole.Perpretator,
+                                UserSender = false,
+                                Message = "You look fresh and sweet, I have wild dreams!"
+                            }
+                        }
                      },
                      new Scenario
                      {
                         Name = "Subtle Sexism",
-                        ShortDescription = "Men gives a women a compliment",
-                        ScenarioType = ScenarioType.Sexism
+                        ShortDescription = "You are given a bizarre compliment",
+                        ScenarioType = ScenarioType.SubtleSexism,
+                        ScenarioSteps = new List<ScenarioStep>
+                        {
+                            new ScenarioStep
+                            {
+                                ScenarioRoleType = ScenarioRole.Perpretator,
+                                UserSender = false,
+                                Message = "These trousers make you look great!"
+                            }
+                        }
                      }
                 };
 

@@ -41,6 +41,8 @@ namespace WebServer.Controllers.Aggregates
                 return NotFound();
             }
 
+            await context.Entry(scenario).Collection(s => s.ScenarioSteps).LoadAsync();
+
             return mapper.Map<ScenarioDTO>(scenario);
         }
 

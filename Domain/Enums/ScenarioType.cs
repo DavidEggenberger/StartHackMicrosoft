@@ -7,6 +7,7 @@ namespace Domain.Enums
     public enum ScenarioType
     {
         Bullying,
-        Sexism
+        Sexism,
+        SubtleSexism
     }
 }

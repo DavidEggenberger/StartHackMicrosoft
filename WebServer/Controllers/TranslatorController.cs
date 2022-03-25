@@ -30,9 +30,9 @@ namespace WebServer.Controllers
         }
 
         [HttpGet("speech")]
-        public async Task<TranslationResultDTO> Translate([FromQuery] string language, [FromQuery] string text, [FromQuery] string goalLanguage)
+        public async Task<TranslationResultDTO> TextToSpeech([FromQuery] string language, [FromQuery] string text)
         {
-            string result = await textToSpeechService.SynthesizeAudioAsync("en-US", text);
+            string result = await textToSpeechService.SynthesizeAudioAsync(language, text);
             return new TranslationResultDTO
             {
                 Result = result

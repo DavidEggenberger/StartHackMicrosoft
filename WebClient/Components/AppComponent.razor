@@ -186,10 +186,10 @@
             var parameters = new ModalParameters();
             parameters.Add("Scenario", scenario);
             Modal.Show<CountDowmModal>(string.Empty, parameters);
-            await Task.Delay(15000);
+            await Task.Delay(10000);
             SelectedScenario = s;
             loadedScenario = await HttpClientService.GetFromAPIAsync<ScenarioDTO>($"/scenarios/{s.Id}");
-            currentAudio = await GetTranslation("Hello you all");
+            currentAudio = await GetTranslation(s.Language, loadedScenario.ScenarioSteps.First().Message);
             audioService.ShowAudio(ScenarioRoleDTO.Perpretator, currentAudio);
             StateHasChanged();
         };
@@ -219,8 +219,8 @@
         await Task.Delay(200);
         StateHasChanged();
     }
-    private async Task<string> GetTranslation(string text)
+    private async Task<string> GetTranslation(string language, string text)
     {
-        return (await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/speech/?language={SelectedScenario.Language}&text={text}")).Result;
+        return (await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/speech/?language={language}&text={text}")).Result;
     }
 }
