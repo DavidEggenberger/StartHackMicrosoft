@@ -1,0 +1,31 @@
+﻿@using System.Timers
+
+<div style="height: 150px; text-align: center; width: 270px; display: grid; place-content: center; background-color: rgba(255, 255, 255, 0.3);">
+    <h3 style="margin: 10px 0; text-align: center; font-weight: 700;">@Scenario.ShortDescription</h3>
+    <h5 style="text-align: center;">Simulation starts in: <span style="color: orange;">@secondsCount sec</span></h5>
+</div>
+
+@code {
+    int secondsCount = 15;
+    Timer timer;
+    [Parameter] public ScenarioDTO Scenario { get; set; }
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        timer = new Timer(1000);
+        timer.Enabled = true;
+        timer.Start();
+        timer.Elapsed += (a, e) =>
+        {
+            if(secondsCount > 1)
+            {
+                secondsCount--;
+            }
+            else
+            {
+                ModalInstance.CloseAsync();
+            }
+            StateHasChanged();
+        };
+    }
+}

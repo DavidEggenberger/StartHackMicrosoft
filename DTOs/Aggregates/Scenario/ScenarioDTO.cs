@@ -16,6 +16,6 @@ namespace DTOs.Aggregates
         public string Situtation { get; set; }
         public List<ScenarioStepDTO> ScenarioSteps { get; set; }
         public bool Selected { get; set; }
-        public string Language { get; set; }
+        public string Language { get; set; } = "English";
     }
 }

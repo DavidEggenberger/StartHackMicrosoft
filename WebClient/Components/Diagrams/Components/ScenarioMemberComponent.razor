@@ -1,5 +1,14 @@
 ﻿<div class="card">
-    <h3>@Node.Role</h3>
+    <div style="width: 100%; display: grid; place-content: center;">
+        @if(Node.Role == ScenarioRoleDTO.Perpretator)
+        {
+            <h3 style="color: red;">@Node.Role</h3>
+        }
+        else
+        {
+            <h3 style="color: orange;">@Node.Role</h3>
+        }
+    </div>
     @foreach (var port in Node.Ports)
     {
         <PortRenderer Port="port" />
@@ -9,4 +18,5 @@
 @code {
     [Parameter]
     public ScenarioMemberNode Node { get; set; }
+    
 }

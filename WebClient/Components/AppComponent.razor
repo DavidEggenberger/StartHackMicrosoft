@@ -172,7 +172,6 @@
                 StateHasChanged();
             };
         };
-
     }
     public async Task SelectScenario(ScenarioDTO scenario)
     {
@@ -181,6 +180,9 @@
         parameters.Add("Scenario", scenario);
         Func<ScenarioDTO, Task> scenarioCallback = async (s) => 
         { 
+            var parameters = new ModalParameters();
+            parameters.Add("Scenario", scenario);
+            Modal.Show<CountDowmModal>(string.Empty, parameters);
             SelectedScenario = s;
             await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/speech/?language={SelectedScenario.Language}&text={selectedScenario.ShortDescription}");
             StateHasChanged();
