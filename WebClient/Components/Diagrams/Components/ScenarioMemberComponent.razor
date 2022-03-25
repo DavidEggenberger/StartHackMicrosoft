@@ -33,6 +33,7 @@
             if(Node.Role == role)
             {
                 audio = uri;
+                StateHasChanged();
                 await JSRuntime.InvokeVoidAsync("startAudio");
                 StateHasChanged();
             }
