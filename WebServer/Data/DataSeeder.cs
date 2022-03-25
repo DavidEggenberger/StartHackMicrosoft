@@ -40,7 +40,7 @@ namespace WebServer.Data
                             {
                                 ScenarioRoleType = ScenarioRole.Perpretator,
                                 UserSender = false,
-                                Message = "You look fresh and sweet, I have wild dreams!"
+                                Message = "You are dumb and lazy, hahaha!"
                             }
                         }
                      },

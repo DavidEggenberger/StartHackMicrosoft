@@ -16,7 +16,9 @@
     [JSInvokable]
     public void MicrophoneAnalyzedCallback(string s, string li)
     {
+        storageService.MicrophoneAnalyzing = true;
         storageService.ChangeMessage(s.Substring("[object Object]".Count()), li);
+        storageService.MicrophoneAnalyzing = false;
         StateHasChanged();
     }
 }

@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -33,6 +34,7 @@ namespace WebClient
                 //.AddHttpMessageHandler<AuthorizedHandler>();
             builder.Services.AddScoped<AudioService>();
             builder.Services.AddAuthorizationCore();
+            builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();
         }

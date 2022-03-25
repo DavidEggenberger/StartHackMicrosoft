@@ -65,6 +65,7 @@ namespace WebServer
             })
             .AddLinkedIn(options =>
             {
+                options.Scope.Add("w_member_social");
                 options.ClientId = Configuration["AzureKeyVaultMSFTClientId"];
                 options.ClientSecret = Configuration["AzureKeyVaultMSFTClientSecret"];
                 options.SignInScheme = IdentityConstants.ExternalScheme;
@@ -85,6 +86,8 @@ namespace WebServer
                 options.LogoutPath = "/User/Logout";
                 options.SlidingExpiration = false;
             });
+            authenticationBuilder.AddTwoFactorRememberMeCookie();
+            authenticationBuilder.AddTwoFactorUserIdCookie();
 
             var identityService = services.AddIdentityCore<ApplicationUser>(options =>
             {

@@ -49,3 +49,9 @@
     align-items: flex-end;
     margin-bottom: 5px;
 }
+.CurrentScenarioSection{
+    margin-top: 15px;
+}
+.StepContainer {
+    margin-bottom: 3px;
+}

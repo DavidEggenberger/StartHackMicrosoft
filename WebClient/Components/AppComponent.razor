@@ -46,15 +46,32 @@
             @foreach(var step in steps)
             {
                 <div class="StepContainer">
-                    @step.ScenarioRoleType
-                    @step.Message
+                    @if(step.ScenarioRoleType == ScenarioRoleDTO.Victim)
+                    {
+                        <span style="font-weight: 700;">YourSelf: </span>
+                    }
+                    else
+                    {
+                        <span style="font-weight: 700;">@step.ScenarioRoleType: </span>
+                    }
+                    @step.EnglishMessage
                 </div>
+            }
+            @if(steps?.Count > 0)
+            {
+                <button @onclick='() => ShowModal()'>Rate your Conversation</button>
             }
         </div>
     </aside>
 </div>
 
 @code{
+    private void ShowModal()
+    {
+        var v = new ModalParameters();
+        v.Add("steps", steps);
+        Modal.Show<ConversationRatingComponent>(string.Empty, v);
+    }
     private ScenarioDTO loadedScenario;
     private string currentAudio;
     private ScenarioStepDTO scenarioStep;
@@ -103,11 +120,14 @@
     private Diagram diagram;
     List<LearningBadgeDTO> learningBadges = new List<LearningBadgeDTO>();
     List<ScenarioDTO> scenarios = new List<ScenarioDTO>();
+    private bool microphone;
     protected override async Task OnInitializedAsync()
     {
+        storageService.MicrophoneChanged += async b => { microphone = b; StateHasChanged(); };
         storageService.MessageChanged += async (m, OriginalLanguageIdentifier) =>
         {
             currentMessage = m;
+            scenarioStep.ScenarioRoleType = ScenarioRoleDTO.Victim;
             scenarioStep.Message = currentMessage;
             scenarioStep.EnglishMessage = (await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/?name={currentMessage}&fromLanguage={OriginalLanguageIdentifier}")).Result;
             steps.Add(scenarioStep);
@@ -198,6 +218,8 @@
                 ScenarioRoleType = loadedScenario.ScenarioSteps.First().ScenarioRoleType
             });
             StateHasChanged();
+
+            FireForget();
         };
         parameters.Add("Scenario", scenario);
         parameters.Add("ScenarioSelectedCallback", scenarioCallback);
@@ -229,4 +251,32 @@
     {
         return (await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/speech/?language={language}&text={text}")).Result;
     }
+    private int count;
+    public async Task FireForget()
+    {
+        while (count < 4)
+        {
+            await Task.Delay(new Random().Next(5000, 15000));
+            Console.WriteLine(90);
+            if(microphone == false)
+            {
+                string word = diks[loadedScenario.Name][count];
+                currentAudio = await GetTranslation(SelectedScenario.Language, word);
+                audioService.ShowAudio(ScenarioRoleDTO.Perpretator, currentAudio);
+                steps.Add(new ScenarioStepDTO
+                {
+                    EnglishMessage = diks[loadedScenario.Name][count],
+                    ScenarioRoleType = ScenarioRoleDTO.Perpretator
+                });
+                StateHasChanged();
+            }
+            count++;
+        }
+    }
+    Dictionary<string, List<string>> diks = new Dictionary<string, List<string>>()
+    {
+        ["Bullying"] = new List<string>{"You are bad for the company", "I wish you bad luck", "Youre a bad guy", ""},
+        ["Subtle Sexism"] = new List<string>{"Please wear the same things tomorrow", "We need to work more together", "", ""},
+        ["Sexism"] = new List<string>{"Please wear shorter things", "I cant wait for summer to see your legs", "Your tits look good", ""}
+    };
 }
