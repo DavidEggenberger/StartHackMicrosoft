@@ -79,14 +79,14 @@ namespace WebServer.Data
                      },
                      new LearningBadge
                      {
-                         Name = "Pioneer",
-                         Description = "Simulate the first situation",
+                         Name = "Analyst",
+                         Description = "Analyze your conversation",
                          IconUri = "/trophy.png"
                      },
                      new LearningBadge
                      {
-                         Name = "Pioneer",
-                         Description = "Simulate the first situation",
+                         Name = "Repeater",
+                         Description = "Visit the platform on 7 consecutive days",
                          IconUri = "/ribbon-badge.png"
                      }
                 };

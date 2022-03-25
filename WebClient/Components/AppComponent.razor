@@ -1,5 +1,6 @@
 ﻿@inject StorageService storageService
 @inject AudioService audioService
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 
 <div class="AppComponentContainer">
     <div class="AppComponentMain">
@@ -36,10 +37,20 @@
             <h3>Learning badges:</h3>
             @foreach(var learningBage in learningBadges)
             {
-                <div class="LearningBadgeContainer">
-                    <img src="@($"/LearningBadges/{learningBage.IconUri}")"/>
-                    <h6>@learningBage.Description</h6>
-                </div>
+                @if (learningBage.Solved)
+                {
+                    <div class="LearningBadgeContainer active">
+                        <img src="@($"/LearningBadges/{learningBage.IconUri}")"/>
+                        <h6>@learningBage.Description</h6>
+                    </div>
+                }
+                else
+                {
+                    <div class="LearningBadgeContainer">
+                        <img src="@($"/LearningBadges/{learningBage.IconUri}")"/>
+                        <h6>@learningBage.Description</h6>
+                    </div>
+                }     
             }
         </div>
         <div class="CurrentScenarioSection">
@@ -66,8 +77,11 @@
 </div>
 
 @code{
+    private bool c => localStorage.GetItem<object>("Achievement2") != null;
+    private bool b => localStorage.GetItem<object>("Achievement1") != null;
     private void ShowModal()
     {
+        localStorage.SetItem("Achievement1", "true");
         var v = new ModalParameters();
         v.Add("steps", steps);
         Modal.Show<ConversationRatingComponent>(string.Empty, v);
@@ -156,6 +170,17 @@
 
         learningBadges = await HttpClientService.GetFromAPIAsync<List<LearningBadgeDTO>>("/learningbadges");
         scenarios = await HttpClientService.GetFromAPIAsync<List<ScenarioDTO>>("/scenarios");
+
+        if (b)
+        {
+            var t = learningBadges.First(l => l.Description == "Simulate the first situation");
+            t.Solved = true;
+        }
+        if (c)
+        {
+            var t = learningBadges.First(l => l.Description == "Analyze your conversation");
+            t.Solved = true;
+        }
 
         diagram.RegisterModelComponent<InformationNode, InformationNodeComponent>();
         diagram.RegisterModelComponent<UserNode, UserComponent>();
