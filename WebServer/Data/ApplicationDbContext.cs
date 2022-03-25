@@ -15,6 +15,7 @@ namespace WebServer.Data
             
         }
 
+        public DbSet<Learning> Learnings { get; set; }
         public DbSet<Scenario> Scenarios { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<LearningBadge> LearningBadges { get; set; }

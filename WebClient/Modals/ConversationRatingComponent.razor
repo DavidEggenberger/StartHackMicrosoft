@@ -27,7 +27,7 @@
         </div>
         <div style="margin-top: 20px; display: flex; justify-content: space-between;">
             <button>Save Privatly</button>
-            <button>Share with the community</button>
+            <button @onclick="async() => SaveDb()">Share with the community</button>
         </div>
     </div>
 </div>
@@ -46,5 +46,14 @@
         };
         localStorage.SetItem("sets", JsonSerializer.Serialize(steps));
         await ModalInstance.CloseAsync();
+    }
+    public async Task SaveDb()
+    {
+        LearningDTO learningDTO = new LearningDTO
+        {
+            PassiveAggressiveRating = max,
+            ScenarioSteps = steps
+        };
+        await HttpClientService.PostToAPIAsync("/learning", learningDTO);
     }
 }

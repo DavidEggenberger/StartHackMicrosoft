@@ -41,7 +41,7 @@
                 {
                     <div class="LearningBadgeContainer active">
                         <img src="@($"/LearningBadges/{learningBage.IconUri}")"/>
-                        <h6>@learningBage.Description</h6>
+                        <h6 style="border-bottom: 2px solid black;">@learningBage.Description</h6>
                     </div>
                 }
                 else
@@ -77,13 +77,16 @@
 </div>
 
 @code{
+    bool enabled = true;
     private bool c => localStorage.GetItem<object>("Achievement2") != null;
     private bool b => localStorage.GetItem<object>("Achievement1") != null;
     private void ShowModal()
     {
+        enabled = false;
         localStorage.SetItem("Achievement1", "true");
         var v = new ModalParameters();
         v.Add("steps", steps);
+        StateHasChanged();
         Modal.Show<ConversationRatingComponent>(string.Empty, v);
     }
     private ScenarioDTO loadedScenario;
@@ -228,7 +231,8 @@
         var parameters = new ModalParameters();
         parameters.Add("Scenario", scenario);
         Func<ScenarioDTO, Task> scenarioCallback = async (s) => 
-        { 
+        {
+            enabled = true;
             var parameters = new ModalParameters();
             parameters.Add("Scenario", scenario);
             Modal.Show<CountDowmModal>(string.Empty, parameters);
@@ -281,9 +285,9 @@
     {
         while (count < 4)
         {
-            await Task.Delay(new Random().Next(5000, 15000));
+            await Task.Delay(new Random().Next(15000, 25000));
             Console.WriteLine(90);
-            if(microphone == false)
+            if(microphone == false && enabled)
             {
                 string word = diks[loadedScenario.Name][count];
                 currentAudio = await GetTranslation(SelectedScenario.Language, word);

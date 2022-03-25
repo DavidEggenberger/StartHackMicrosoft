@@ -66,6 +66,10 @@ namespace WebClient.Auth
 
                     return new ClaimsPrincipal(identity);
                 }
+                else
+                {
+                    navigationManager.NavigateTo(EndpointConstants.LoginPath, true);
+                }
             }
             catch (Exception ex)
             {

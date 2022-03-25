@@ -8,7 +8,9 @@ namespace Domain
 {
     public class Learning
     {
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public List<ScenarioStep> Steps { get; set; }
-        public int MyProperty { get; set; }
+        public int Ratings { get; set; }
     }
 }

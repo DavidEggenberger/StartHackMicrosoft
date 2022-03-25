@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain;
+using DTOs;
 using DTOs.Aggregates;
 
 namespace WebServer.Mappings
@@ -9,6 +10,7 @@ namespace WebServer.Mappings
         public LearningBadgeMappings()
         {
             CreateMap<LearningBadge, LearningBadgeDTO>();
+            CreateMap<LearningDTO, Learning>();
         }
     }
 }
