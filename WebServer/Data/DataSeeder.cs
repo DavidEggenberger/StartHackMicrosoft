@@ -17,23 +17,15 @@ namespace WebServer.Data
                      new Scenario
                      {
                         Name = "Sexism",
-                        ShortDescription = "Man harrasses women during the coffe break",
-                        Situtation = "",
+                        ShortDescription = "You are harassed during the coffee break",
                         ScenarioType = ScenarioType.Sexism,
                         ScenarioSteps = new List<ScenarioStep>
                         {
                             new ScenarioStep
                             {
                                 ScenarioRoleType = ScenarioRole.Perpretator,
-                                Message = ""
-                            },
-                            new ScenarioStep
-                            {
-
-                            },
-                            new ScenarioStep
-                            {
-
+                                UserSender = false,
+                                Message = "You look fresh and sweet, I have wild dreams!"
                             }
                         }
                      },

@@ -1,5 +1,6 @@
 ﻿using Blazor.Diagrams.Core.Models;
 using DTOs.Aggregates.Scenario;
+using System;
 
 namespace WebClient.Components.Diagrams.Nodes
 {
@@ -11,5 +12,6 @@ namespace WebClient.Components.Diagrams.Nodes
             AddPort(PortAlignment.Bottom);
             this.Role = Role;
         }
+        public event Action<string> audioForPrepretator;
     }
 }

@@ -14,5 +14,7 @@ namespace DTOs.Aggregates.Scenario
         public string Message { get; set; }
         public string EnglishMessage { get; set; }
         public string OriginalLanguageIdentifier { get; set; }
+        public int MillisecondBreak { get; set; }
+        public string Situation { get; set; }
     }
 }

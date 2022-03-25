@@ -31,7 +31,7 @@ namespace WebClient
             builder.Services.AddTransient<AuthorizedHandler>();
             builder.Services.AddHttpClient("authorizedClient", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
                 //.AddHttpMessageHandler<AuthorizedHandler>();
-
+            builder.Services.AddScoped<AudioService>();
             builder.Services.AddAuthorizationCore();
 
             await builder.Build().RunAsync();

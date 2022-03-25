@@ -27,3 +27,6 @@
         });
     }  
 }
+function startAudio() {
+    document.getElementById('audio').play();
+}

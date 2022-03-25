@@ -11,7 +11,7 @@ namespace Domain
         public ScenarioType ScenarioType { get; set; }
         public string Name { get; set; }
         public string ShortDescription { get; set; }
-        public string Situtation { get; set; }
+        public string Situation { get; set; }
         public List<ScenarioStep> ScenarioSteps { get; set; }
     }
 }

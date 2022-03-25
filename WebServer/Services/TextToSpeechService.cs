@@ -41,7 +41,7 @@ namespace WebServer.Services
             {
 
             }
-            return $"{env.WebRootPath}/{id}.wav";
+            return $"/{id}.wav";
         }
     }
 }

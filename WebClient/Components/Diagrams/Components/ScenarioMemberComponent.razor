@@ -1,4 +1,5 @@
-﻿<div class="card">
+﻿@inject AudioService audioService
+<div class="card">
     <div style="width: 100%; display: grid; place-content: center;">
         @if(Node.Role == ScenarioRoleDTO.Perpretator)
         {
@@ -9,6 +10,10 @@
             <h3 style="color: orange;">@Node.Role</h3>
         }
     </div>
+    @if(audio != null)
+    {
+        <audio id="audio" type="audio/wav" src="@audio"></audio>
+    }
     @foreach (var port in Node.Ports)
     {
         <PortRenderer Port="port" />
@@ -16,7 +21,19 @@
 </div>
 
 @code {
+    private string audio;
     [Parameter]
     public ScenarioMemberNode Node { get; set; }
-    
+    protected override async Task OnInitializedAsync()
+    {
+        audioService.ShowAudioEvent += async (role, uri) =>
+        {
+            if(Node.Role == role)
+            {
+                audio = uri;
+                await JSRuntime.InvokeVoidAsync("startAudio");
+                StateHasChanged();
+            }
+        };
+    }
 }

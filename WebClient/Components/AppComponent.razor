@@ -1,4 +1,5 @@
 ﻿@inject StorageService storageService
+@inject AudioService audioService
 
 <div class="AppComponentContainer">
     <div class="AppComponentMain">
@@ -53,6 +54,8 @@
 </div>
 
 @code{
+    private ScenarioDTO loadedScenario;
+    private string currentAudio;
     private ScenarioStepDTO scenarioStep;
     private string currentMessage;
     private List<ScenarioStepDTO> steps;
@@ -183,8 +186,11 @@
             var parameters = new ModalParameters();
             parameters.Add("Scenario", scenario);
             Modal.Show<CountDowmModal>(string.Empty, parameters);
+            await Task.Delay(15000);
             SelectedScenario = s;
-            await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/speech/?language={SelectedScenario.Language}&text={selectedScenario.ShortDescription}");
+            loadedScenario = await HttpClientService.GetFromAPIAsync<ScenarioDTO>($"/scenarios/{s.Id}");
+            currentAudio = await GetTranslation("Hello you all");
+            audioService.ShowAudio(ScenarioRoleDTO.Perpretator, currentAudio);
             StateHasChanged();
         };
         parameters.Add("Scenario", scenario);
@@ -212,5 +218,9 @@
         diagram = new Diagram(options);
         await Task.Delay(200);
         StateHasChanged();
+    }
+    private async Task<string> GetTranslation(string text)
+    {
+        return (await HttpClientService.GetFromAPIAsync<TranslationResultDTO>($"/translator/speech/?language={SelectedScenario.Language}&text={text}")).Result;
     }
 }

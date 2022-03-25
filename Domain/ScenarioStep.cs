@@ -12,5 +12,7 @@ namespace Domain
         public Guid Id { get; set; }
         public ScenarioRole ScenarioRoleType { get; set; }
         public string Message { get; set; }
+        public bool UserSender { get; set; }
+        public int MillisecondBreak { get; set; }
     }
 }
