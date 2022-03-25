@@ -22,6 +22,8 @@
 
 @code {
     private string audio;
+    [CascadingParameter]
+    public List<ScenarioStepDTO> steps { get; set; }
     [Parameter]
     public ScenarioMemberNode Node { get; set; }
     protected override async Task OnInitializedAsync()

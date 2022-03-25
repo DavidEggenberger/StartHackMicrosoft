@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
-using WebServer.Options;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.CognitiveServices.Speech;
-using Microsoft.CognitiveServices.Speech.Audio;
-using System;
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
+using System;
+using System.Threading.Tasks;
+using WebServer.Options;
 
 namespace WebServer.Services
 {
@@ -14,8 +11,8 @@ namespace WebServer.Services
     {
         private readonly AzureTranslatorOptions azureTranslatorOptions;
         IWebHostEnvironment env;
-        TranslatorService translator;
-        public TextToSpeechService(IOptions<AzureTranslatorOptions> azureTranslatorOptions, IWebHostEnvironment env, TranslatorService translator)
+        WebServer.TranslatorService translator;
+        public TextToSpeechService(IOptions<AzureTranslatorOptions> azureTranslatorOptions, IWebHostEnvironment env, WebServer.TranslatorService translator)
         {
             this.azureTranslatorOptions = azureTranslatorOptions.Value;
             this.env = env;
@@ -24,7 +21,7 @@ namespace WebServer.Services
         public async Task<string> SynthesizeAudioAsync(string language, string text)
         {
             var config = SpeechConfig.FromSubscription(azureTranslatorOptions.SubscriptionKey, azureTranslatorOptions.Location);
-            
+
             config.SpeechSynthesisLanguage = language;
 
             var lang = language switch

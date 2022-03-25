@@ -4,9 +4,11 @@
 <div class="AppComponentContainer">
     <div class="AppComponentMain">
         <div class="DiagramContainer">
-            <CascadingValue Value="diagram">
-                <DiagramCanvas></DiagramCanvas>
-            </CascadingValue>
+            <CascadingValue Value=steps>
+                <CascadingValue Value="diagram">
+                    <DiagramCanvas></DiagramCanvas>
+                </CascadingValue>
+            </CascadingValue>         
         </div>
     </div>
     <aside class="AsideOverview">
@@ -46,7 +48,6 @@
                 <div class="StepContainer">
                     @step.ScenarioRoleType
                     @step.Message
-                    @step.EnglishMessage
                 </div>
             }
         </div>
@@ -191,6 +192,11 @@
             loadedScenario = await HttpClientService.GetFromAPIAsync<ScenarioDTO>($"/scenarios/{s.Id}");
             currentAudio = await GetTranslation(s.Language, loadedScenario.ScenarioSteps.First().Message);
             audioService.ShowAudio(ScenarioRoleDTO.Perpretator, currentAudio);
+            steps.Add(new ScenarioStepDTO
+            {
+                EnglishMessage = loadedScenario.ScenarioSteps.First().Message,
+                ScenarioRoleType = loadedScenario.ScenarioSteps.First().ScenarioRoleType
+            });
             StateHasChanged();
         };
         parameters.Add("Scenario", scenario);
